@@ -2,11 +2,13 @@ package com.example;
 
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class Store {
+public class Store implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private Map<String, Game> gamesBD;
     private Map<String, Companies> compBD;
 
@@ -33,6 +35,8 @@ public class Store {
                     "Already exist a game with this named: " + game.getGameStatus().getName());
         }
         this.gamesBD.put(game.getGameStatus().getName(), game);
+        game.getCompanies().getDeveloper().getDevGames().put(game.getGameStatus().getName(), game);
+        game.getCompanies().getDistributor().getDistGames().put(game.getGameStatus().getName(), game);
         return true;
     }
 
@@ -42,6 +46,10 @@ public class Store {
         }
 
         throw new ItemDoesNotExistException("The game: " + name + " doesn't Exist");
+    }
+
+    public Game getGame(Game game) throws ItemDoesNotExistException {
+        return getGame(game.getGameStatus().getName());
     }
 
     public Map<String, Game> getGameByTags(List<Tag> tags) {
@@ -118,5 +126,36 @@ public class Store {
             return this.compBD.get(disName).getDistributor();
         }
         throw new ItemDoesNotExistException("The Distirbutor: " + disName + "Doesn't Exist");
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((compBD == null) ? 0 : compBD.hashCode());
+        result = prime * result + ((gamesBD == null) ? 0 : gamesBD.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Store other = (Store) obj;
+        if (compBD == null) {
+            if (other.compBD != null)
+                return false;
+        } else if (!compBD.equals(other.compBD))
+            return false;
+        if (gamesBD == null) {
+            if (other.gamesBD != null)
+                return false;
+        } else if (!gamesBD.equals(other.gamesBD))
+            return false;
+        return true;
     }
 }
