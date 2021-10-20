@@ -1,0 +1,3 @@
+Muitas coisas podem melhorar ai eu nem sem nem por onde começar, primeiro o sistema de persistencia de dados não esta funcionando e eu n tenho ideia do pq
+passei 3 dias tentando resolver e n consigo então decidir mandar assim mesmo infelizmente, todas as classes estão no mesmo packote oq não é uma pratica mt boa, mas como
+estou experimentando programar agora no vsCode ele da alguns erros quando tento criar novos pacotes não sei pq, mas acho q em geral é isso
